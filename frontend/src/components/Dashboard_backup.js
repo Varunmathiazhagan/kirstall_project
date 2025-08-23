@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
+import { API_ENDPOINTS } from '../config/api';
 import { motion, AnimatePresence } from 'framer-motion';
 import { gsap } from 'gsap';
 import { CheckCircleIcon, ExclamationTriangleIcon, ArrowTrendingUpIcon, CubeIcon, ChartBarIcon, TruckIcon } from '@heroicons/react/24/outline';
@@ -212,7 +213,7 @@ function Dashboard({ token, user }) {
       if (filters.start_date) queryParams.append('start_date', filters.start_date);
       if (filters.end_date) queryParams.append('end_date', filters.end_date);
 
-      const response = await fetch(`http://localhost:5000/api/assets/dashboard?${queryParams}`, {
+  const response = await fetch(`${API_ENDPOINTS.ASSETS.DASHBOARD}?${queryParams}`, {
         headers: { 
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json'
@@ -364,7 +365,6 @@ function Dashboard({ token, user }) {
             </button>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {user?.role === 'admin' && (
               <div>
                 <label className="block text-sm font-medium text-slate-700 mb-2">Base</label>
@@ -422,8 +422,8 @@ function Dashboard({ token, user }) {
           </div>
         </motion.div>
 
-        {/* Enhanced Key Metrics */}
-        <motion.div 
+  {/* Enhanced Key Metrics */}
+  <motion.div 
           className="grid grid-cols-1 md:grid-cols-4 gap-6"
           initial={{ y: 30, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
@@ -448,7 +448,7 @@ function Dashboard({ token, user }) {
                 <CubeIcon className="w-8 h-8 text-white" />
               </div>
             </div>
-          </div>
+          </motion.div>
 
           {/* Active Assets */}
           <div className="bg-white shadow-xl rounded-2xl p-6 border border-slate-200 hover:shadow-2xl transition-shadow duration-300">
@@ -502,7 +502,7 @@ function Dashboard({ token, user }) {
               </div>
             </div>
           </div>
-        </div>
+        </motion.div>
 
         {/* Asset Categories */}
         {metrics.categories && (

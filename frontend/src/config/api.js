@@ -1,5 +1,5 @@
-// API Configuration
-const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000';
+// API Configuration (direct URL, no env)
+const API_BASE_URL = 'https://kirstall-project.onrender.com';
 
 export const API_ENDPOINTS = {
   AUTH: {

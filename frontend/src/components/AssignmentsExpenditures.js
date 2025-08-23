@@ -136,7 +136,7 @@ const AssignmentsExpenditures = ({ token, user, onNavigate }) => {
             status: 'returned',
             notes: 'Security enhancement project completed',
             assigned_by: 'Delta Security',
-            base_name: 'Camp Delta'
+            base_name: 'Camp Delta.'
           }
         ];
 

@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+import { API_ENDPOINTS } from '../config/api';
 import { motion, AnimatePresence } from 'framer-motion';
 import { gsap } from 'gsap';
 import { 
@@ -61,7 +62,7 @@ function Login({ onLogin }) {
 
   const fetchBases = async () => {
     try {
-      const response = await fetch('http://localhost:5000/api/auth/bases');
+      const response = await fetch(API_ENDPOINTS.AUTH.BASES);
       if (response.ok) {
         const data = await response.json();
         setBases(data.bases || []);
@@ -146,8 +147,8 @@ function Login({ onLogin }) {
     setSuccessMessage("");
 
     try {
-      const endpoint = isSignup ? 'signup' : 'login';
-      const response = await fetch(`http://localhost:5000/api/auth/${endpoint}`, {
+  const endpoint = isSignup ? 'signup' : 'login';
+  const response = await fetch(`${API_ENDPOINTS.AUTH.BASE}/${endpoint}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

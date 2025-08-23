@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { API_ENDPOINTS } from '../config/api';
 
 const Purchases = ({ token, user }) => {
   const [purchases, setPurchases] = useState([]);
@@ -40,7 +41,7 @@ const Purchases = ({ token, user }) => {
       if (filters.start_date) queryParams.append('start_date', filters.start_date);
       if (filters.end_date) queryParams.append('end_date', filters.end_date);
 
-      const response = await fetch(`http://localhost:5000/api/purchases?${queryParams}`, {
+  const response = await fetch(`${API_ENDPOINTS.PURCHASES.BASE}?${queryParams}`, {
         headers: { 
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json'
@@ -64,7 +65,7 @@ const Purchases = ({ token, user }) => {
 
   const fetchAssets = async () => {
     try {
-      const response = await fetch('http://localhost:5000/api/assets', {
+  const response = await fetch(API_ENDPOINTS.ASSETS.BASE, {
         headers: { 
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json'
@@ -106,7 +107,7 @@ const Purchases = ({ token, user }) => {
     try {
       setLoading(true);
       
-      const response = await fetch('http://localhost:5000/api/purchases', {
+  const response = await fetch(API_ENDPOINTS.PURCHASES.BASE, {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${token}`,
