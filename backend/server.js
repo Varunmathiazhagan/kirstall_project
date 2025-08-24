@@ -17,16 +17,36 @@ const app = express();
 const DEFAULT_PORT = parseInt(process.env.PORT, 10) || 5000;
 
 // Middleware
-app.use(cors({
-  origin: [
-    'http://localhost:3000',
-    'http://localhost:3001',
-    'https://kristalball-frontend.netlify.app',
+// CORS: allow local dev, Netlify app, Vercel prod and preview deployments
+const allowedOrigins = [
+  'http://localhost:3000',
+  'http://localhost:3001',
+  'https://kristalball-frontend.netlify.app',
   'https://kirstall-project.vercel.app',
-    process.env.FRONTEND_URL
-  ].filter(Boolean),
-  credentials: true
-}));
+  'https://kirstall-project-git-main-varuns-projects-250b4b6e.vercel.app',
+  process.env.FRONTEND_URL
+].filter(Boolean);
+
+// Matches Vercel preview URLs like:
+// https://kirstall-project-git-<branch>-<account>.vercel.app
+const vercelPreviewPattern = /^https?:\/\/kirstall-project-git-[a-z0-9-]+\.vercel\.app$/i;
+
+const corsOptions = {
+  origin(origin, callback) {
+    if (!origin) return callback(null, true); // same-origin or non-browser clients
+    if (allowedOrigins.includes(origin) || vercelPreviewPattern.test(origin)) {
+      return callback(null, true);
+    }
+    return callback(new Error(`Not allowed by CORS: ${origin}`));
+  },
+  credentials: true,
+  methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
+};
+
+app.use(cors(corsOptions));
+// Handle preflight for all routes
+app.options('*', cors(corsOptions));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
