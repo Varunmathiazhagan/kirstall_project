@@ -24,6 +24,7 @@ const allowedOrigins = [
   'https://kristalball-frontend.netlify.app',
   'https://kirstall-project.vercel.app',
   'https://kirstall-project-git-main-varuns-projects-250b4b6e.vercel.app',
+  'https://kirstalball.varunm.tech',
   process.env.FRONTEND_URL
 ].filter(Boolean);
 
